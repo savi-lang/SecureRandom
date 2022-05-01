@@ -1,0 +1,25 @@
+:manifest lib SecureRandom
+  :sources "src/*.savi"
+
+  :dependency Random v0
+    :from "github:savi-lang/Random"
+
+:manifest bin "spec"
+  :copies SecureRandom
+  :sources "spec/*.savi"
+
+  :dependency Spec v0
+    :from "github:savi-lang/Spec"
+    :depends on Map
+    :depends on Time
+    :depends on Timer
+
+  :transitive dependency Map v0
+    :from "github:savi-lang/Map"
+
+  :transitive dependency Time v0
+    :from "github:savi-lang/Time"
+
+  :transitive dependency Timer v0
+    :from "github:savi-lang/Timer"
+    :depends on Time

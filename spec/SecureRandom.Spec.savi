@@ -1,0 +1,6 @@
+:class SecureRandom.Spec
+  :is Spec
+  :const describes: "SecureRandom"
+
+  :it "has a placeholder method for demonstrating testing"
+    assert: SecureRandom.placeholder == True

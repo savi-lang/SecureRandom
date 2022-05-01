@@ -1,0 +1,3 @@
+:module SecureRandom
+  :fun placeholder
+    True
