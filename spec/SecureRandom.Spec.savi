@@ -2,5 +2,14 @@
   :is Spec
   :const describes: "SecureRandom"
 
-  :it "has a placeholder method for demonstrating testing"
-    assert: SecureRandom.placeholder == True
+  :it "conforms to Random trait"
+    random = SecureRandom.new
+    assert: random.u64 <: U64
+
+  :it "is reasonably random"
+    random = SecureRandom.new
+    assert: random.u64 != random.u64
+
+  :it "can be reused"
+    random = SecureRandom.new
+    16.times -> (assert: random.u64 <: U64)

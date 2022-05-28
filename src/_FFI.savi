@@ -1,0 +1,4 @@
+:module _FFI
+  :ffi getentropy(buffer CPointer(U8), size USize) I32
+  :ffi pony_os_errno OSError
+
