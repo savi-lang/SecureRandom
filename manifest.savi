@@ -4,9 +4,6 @@
   :dependency Random v0
     :from "github:savi-lang/Random"
 
-  :dependency OSError v0
-    :from "github:savi-lang/OSError"
-
 :manifest bin "spec"
   :copies SecureRandom
   :sources "spec/*.savi"

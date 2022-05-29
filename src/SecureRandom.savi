@@ -1,31 +1,30 @@
 :class SecureRandom
   :is Random
 
-  :let chunk USize: 256
-  :var limit USize: 2048
-  :var buffer: Bytes.new(@limit)
-  :var offset USize: 0
-
-  :var listen_error OSError: OSError.None
+  :const _chunk USize: 256
+  :const _limit USize: 2048
+  :let _buffer: Bytes.new(@_limit)
+  :var _offset USize: 0
 
   :new: @_grab_random_bytes
 
   :fun ref u64 U64
-    if (@offset == @limit) @_grab_random_bytes
+    if (@_offset == @_limit) @_grab_random_bytes
 
     @_read_from_buffer
 
   // This method will deal with different platforms by selecting the
   // appropriate secure random primitive.
   :fun ref _grab_random_bytes
-    (@limit / @chunk).times -> (i |
-      @buffer.resize_possibly_including_uninitialized_memory(@chunk)
-      _FFI.getentropy(@buffer.cpointer(i * @chunk), @chunk)
-      @listen_error = _FFI.pony_os_errno
+    @_buffer.resize_possibly_including_uninitialized_memory(@_chunk)
+
+    (@_limit / @_chunk).times -> (i |
+      _FFI.getentropy(@_buffer.cpointer(i * @_chunk), @_chunk)
     )
-    @offset = 0
+
+    @_offset = 0
 
   :fun ref _read_from_buffer
-    res = try (@buffer.read_native_u64!(@offset) | 0)
-    @offset += @chunk
+    res = try (@_buffer.read_native_u64!(@_offset) | 0)
+    @_offset += @_chunk
     res
