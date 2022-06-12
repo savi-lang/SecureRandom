@@ -9,9 +9,9 @@
   :new: @_grab_random_bytes
 
   :fun ref u64 U64
-    if (@_offset == @_limit) @_grab_random_bytes
+    if (@_offset >= @_limit - 64) @_grab_random_bytes
 
-    @_read_from_buffer
+    @_read_64_from_buffer
 
   // This method will deal with different platforms by selecting the
   // appropriate secure random primitive.
@@ -24,7 +24,7 @@
 
     @_offset = 0
 
-  :fun ref _read_from_buffer
+  :fun ref _read_64_from_buffer
     res = try (@_buffer.read_native_u64!(@_offset) | 0)
-    @_offset += @_chunk
+    @_offset += 64
     res

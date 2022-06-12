@@ -12,4 +12,6 @@
 
   :it "can be reused"
     random = SecureRandom.new
-    16.times -> (assert: random.u64 <: U64)
+
+    // Calling it more than 32 times will force a buffer refill.
+    64.times -> (assert: random.u64 <: U64)
