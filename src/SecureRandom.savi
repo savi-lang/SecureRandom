@@ -11,7 +11,30 @@
   :fun ref u64 U64
     if (@_offset >= @_limit - 64) @_grab_random_bytes
 
-    @_read_64_from_buffer
+    res = try (@_buffer.read_native_u64!(@_offset) | 0), @_offset += 64
+
+    res
+
+  :fun ref u32 U32
+    if (@_offset >= @_limit - 32) @_grab_random_bytes
+
+    res = try (@_buffer.read_native_u32!(@_offset) | 0), @_offset += 32
+
+    res
+
+  :fun ref u16 U16
+    if (@_offset >= @_limit - 16) @_grab_random_bytes
+
+    res = try (@_buffer.read_native_u16!(@_offset) | 0), @_offset += 16
+
+    res
+
+  :fun ref u8 U8
+    if (@_offset >= @_limit - 1) @_grab_random_bytes
+
+    res = try (@_buffer.read_byte!(@_offset) | 0), @_offset += 1
+
+    res
 
   // This method will deal with different platforms by selecting the
   // appropriate secure random primitive.
@@ -23,8 +46,3 @@
     )
 
     @_offset = 0
-
-  :fun ref _read_64_from_buffer
-    res = try (@_buffer.read_native_u64!(@_offset) | 0)
-    @_offset += 64
-    res
