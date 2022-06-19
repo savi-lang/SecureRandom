@@ -9,23 +9,23 @@
   :new: @_grab_random_bytes
 
   :fun ref u64 U64
-    if (@_offset >= @_limit - 64) @_grab_random_bytes
+    if (@_offset >= @_limit - 8) @_grab_random_bytes
 
-    res = try (@_buffer.read_native_u64!(@_offset) | 0), @_offset += 64
+    res = try (@_buffer.read_native_u64!(@_offset) | 0), @_offset += 8
 
     res
 
   :fun ref u32 U32
-    if (@_offset >= @_limit - 32) @_grab_random_bytes
+    if (@_offset >= @_limit - 4) @_grab_random_bytes
 
-    res = try (@_buffer.read_native_u32!(@_offset) | 0), @_offset += 32
+    res = try (@_buffer.read_native_u32!(@_offset) | 0), @_offset += 4
 
     res
 
   :fun ref u16 U16
-    if (@_offset >= @_limit - 16) @_grab_random_bytes
+    if (@_offset >= @_limit - 2) @_grab_random_bytes
 
-    res = try (@_buffer.read_native_u16!(@_offset) | 0), @_offset += 16
+    res = try (@_buffer.read_native_u16!(@_offset) | 0), @_offset += 2
 
     res
 

@@ -13,8 +13,10 @@
   :it "can be reused"
     random = SecureRandom.new
 
-    // Calling it more than 32 times will force a buffer refill.
-    64.times -> (assert: random.u64 <: U64)
+    // Calling it more than 256 times will force a buffer refill.
+    257.times -> (random.u64)
+
+    assert: random.u64 <: U64
 
   :it "implements lower byte reads"
     random = SecureRandom.new
