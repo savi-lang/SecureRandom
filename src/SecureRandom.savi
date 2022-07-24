@@ -9,32 +9,61 @@
   :new: @_grab_random_bytes
 
   :fun ref u64 U64
-    if (@_offset >= @_limit - 8) @_grab_random_bytes
+    // TODO: replace `while True` with `loop`.
+    while True (
+      // `read_native_u64!` will throw an error when there aren't enough bytes in the buffer.
+      try (
+        res = @_buffer.read_native_u64!(@_offset)
+        @_offset += 8
+        return res
+      |
+        @_grab_random_bytes
+      )
+    )
 
-    res = try (@_buffer.read_native_u64!(@_offset) | 0), @_offset += 8
-
-    res
+    0 // Just to appease the type checker, this will never return 0.
 
   :fun ref u32 U32
-    if (@_offset >= @_limit - 4) @_grab_random_bytes
+    // TODO: replace `while True` with `loop`.
+    while True (
+      try (
+        res = @_buffer.read_native_u32!(@_offset)
+        @_offset += 4
+        return res
+      |
+        @_grab_random_bytes
+      )
+    )
 
-    res = try (@_buffer.read_native_u32!(@_offset) | 0), @_offset += 4
-
-    res
+    0
 
   :fun ref u16 U16
-    if (@_offset >= @_limit - 2) @_grab_random_bytes
+    // TODO: replace `while True` with `loop`.
+    while True (
+      try (
+        res = @_buffer.read_native_u16!(@_offset)
+        @_offset += 2
+        return res
+      |
+        @_grab_random_bytes
+      )
+    )
 
-    res = try (@_buffer.read_native_u16!(@_offset) | 0), @_offset += 2
-
-    res
+    0
 
   :fun ref u8 U8
-    if (@_offset >= @_limit - 1) @_grab_random_bytes
+    // TODO: replace `while True` with `loop`.
+    while True (
+      try (
+        res = @_buffer.read_byte!(@_offset)
+        @_offset += 1
+        return res
+      |
+        @_grab_random_bytes
+      )
+    )
 
-    res = try (@_buffer.read_byte!(@_offset) | 0), @_offset += 1
-
-    res
+    0
 
   // This method will deal with different platforms by selecting the
   // appropriate secure random primitive.
