@@ -8,6 +8,7 @@
 
   :it "is reasonably random"
     random = SecureRandom.new
+    assert: random.u64 != 0
     assert: random.u64 != random.u64
 
   :it "can be reused"
@@ -16,7 +17,9 @@
     // Calling it more than 256 times will force a buffer refill.
     257.times -> (random.u64)
 
-    assert: random.u64 <: U64
+    value = random.u64
+    assert: value <: U64
+    assert: value != 0
 
   :it "implements lower byte reads"
     random = SecureRandom.new
