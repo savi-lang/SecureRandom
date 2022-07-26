@@ -71,7 +71,10 @@
     @_buffer.resize_possibly_including_uninitialized_memory(@_chunk)
 
     (@_limit / @_chunk).times -> (i |
-      _FFI.getentropy(@_buffer.cpointer(i * @_chunk), @_chunk)
+      case (
+      | Platform.is_macos | _FFI.getentropy(@_buffer.cpointer(i * @_chunk), @_chunk)
+      | Platform.is_linux | _FFI.getrandom(@_buffer.cpointer(i * @_chunk), @_chunk)
+      )
     )
 
     @_offset = 0
