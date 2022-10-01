@@ -5,3 +5,20 @@
   // Linux
   :ffi getrandom(buffer CPointer(U8), size USize) I32
 
+  // Windows
+  :ffi _windowsBCryptGenRandom(
+    algorithm CPointer(None)
+    buffer CPointer(U8)
+    size U32
+    flags U32
+  ) I32
+    :foreign_name "BCryptGenRandom"
+    :link_lib "Bcrypt"
+
+  :fun non windows_getrandom(buffer CPointer(U8), size USize)
+    @_windowsBCryptGenRandom(
+      CPointer(None).null // no algorithm because we ask for "system-preferred"
+      buffer
+      size.u32
+      0x00000002 // BCRYPT_USE_SYSTEM_PREFERRED_RNG
+    )
