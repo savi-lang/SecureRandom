@@ -77,12 +77,7 @@
       | Platform.is_windows |
         _FFI.windows_getrandom(@_buffer.cpointer(i * @_chunk), @_chunk)
       | Platform.is_linux |
-        // Linux `getrandom` can sometimes fail when there isn't enough entropy.
-        // We'll just spin here until it succeeds, to avoid insecure output.
-        result = -1
-        while (result == -1) (
-          result = _FFI.getrandom(@_buffer.cpointer(i * @_chunk), @_chunk)
-        )
+        _FFI.getrandom(@_buffer.cpointer(i * @_chunk), @_chunk, 0)
       )
     )
 

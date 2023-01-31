@@ -3,7 +3,7 @@
   :ffi getentropy(buffer CPointer(U8), size USize) I32
 
   // Linux
-  :ffi getrandom(buffer CPointer(U8), size USize) I32
+  :ffi getrandom(buffer CPointer(U8), size USize, flags U32) ISize
 
   // Windows
   :ffi _windowsBCryptGenRandom(

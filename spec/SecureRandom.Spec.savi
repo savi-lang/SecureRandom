@@ -26,4 +26,3 @@
     assert: random.u32 <: U32
     assert: random.u16 <: U16
     assert: random.u8  <: U8
-
